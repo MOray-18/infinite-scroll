@@ -10,7 +10,6 @@ const apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&coun
 const getPhotos = async function () {
   try {
     const response = await fetch(apiUrl);
-    console.log(response);
     const data = await response.json();
     console.log(data);
 
@@ -22,8 +21,12 @@ const getPhotos = async function () {
 
 const renderImages = function (images) {
   images.forEach(img => {
-    const { alt_description: alt, links } = img;
-    const imageEl = `<img src="${links.html}" alt="${alt}" />`;
+    const { alt_description: alt, links, urls } = img;
+    const imageEl = `
+      <a href="${links.html}">
+        <img src="${urls.regular}" alt="${alt}" title="${alt}" />
+      </a>
+      `;
     imageContainer.insertAdjacentHTML('beforeend', imageEl);
   });
 };
